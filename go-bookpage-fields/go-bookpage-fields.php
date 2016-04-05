@@ -13,8 +13,7 @@
 
 class GO_Bookpage_Fields {
 	function __construct() {
-		$template_slug = ( isset( $_GET['post'] ) ) ? get_page_template_slug( $_GET['post'] ) : null;
-		if ( 'template-book.php' === $template_slug || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		if ( $this->editing_bookpage() ) {
 			add_action( 'fm_post_page', array( $this, 'excerpt_fields' ) );
 			add_action( 'fm_post_page', array( $this, 'testimonial_fields' ) );
 			add_action( 'fm_post_page', array( $this, 'worksheet_fields' ) );
@@ -23,7 +22,18 @@ class GO_Bookpage_Fields {
 		add_filter( 'fieldmanager_revision_fields', array( $this, 'register_fields_for_revision' ), 10, 1 );
 	}
 
-	function exerpt_fields() {
+	function editing_bookpage() {
+		if ( isset( $_GET['post'] ) ) {
+			$id = $_GET['post'];
+			$template_slug = get_page_template_slug( $id );
+			return 'template-book.php' === $template_slug;
+		} else {
+			// You must be doing AJAX or something
+			return true;
+		}
+	}
+
+	function excerpt_fields() {
 		if ( class_exists( 'Fieldmanager_Group' ) ) {
 			$excerpts = new Fieldmanager_Group( array(
 				'name' => 'book_excerpts',
@@ -43,7 +53,7 @@ class GO_Bookpage_Fields {
 					) ),
 				),
 			) );
-			$excerpts->add_meta_box( 'Excerpt Links', 'page', 'side', 'high' );
+			$excerpts->add_meta_box( 'Excerpt Links', 'page', 'normal', 'high' );
 		}
 	}
 
@@ -100,7 +110,7 @@ class GO_Bookpage_Fields {
 	 * @param array List of fields eligible for revision
 	 * @return array Modify fields in the filter to include homepage_primary_content
 	 */
-	function register_homepage_fields_for_revision( $fields ) {
+	function register_fields_for_revision( $fields ) {
 		$fields['page']['book_excerpts'] = 'Book Excerpts';
 		$fields['page']['book_testimonials'] = 'Book Testimonials';
 		$fields['page']['book_worksheets'] = 'Book Worksheets';
