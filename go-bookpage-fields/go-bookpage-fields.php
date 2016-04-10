@@ -70,8 +70,15 @@ class GO_Bookpage_Fields {
 				'sortable' => true,
 				'add_more_label' => 'Add Testimonial',
 				'children' => array(
-					'testimonial' => new Fieldmanager_TextArea( 'Testimonial' ),
-					'attribution' => new Fieldmanager_TextArea( 'Attribution' ),
+					'testimonial' => new Fieldmanager_RichTextArea( array(
+				        'name' => 'testimonial',
+				        'buttons_1' => array( 'bold', 'italic', 'link' ),
+						'buttons_2' => array(),
+				        'editor_settings' => array(
+				        	'quicktags' => false,
+				            'media_buttons' => false,
+			            ),
+		            ) ),
 				),
 			) );
 			$content->add_meta_box( 'Content Areas', 'page', 'normal', 'high' );
