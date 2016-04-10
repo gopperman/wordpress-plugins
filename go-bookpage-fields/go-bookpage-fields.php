@@ -46,7 +46,7 @@ class GO_Bookpage_Fields {
 				'children' => array(
 					'chapter' => new Fieldmanager_TextField( 'Chapter Number' ),
 					'excerpt_link' => new Fieldmanager_Autocomplete( array(
-						'label' => 'Find a Worksheet Post',
+						'label' => 'Find an excerpt Post',
 						'datasource' => new Fieldmanager_Datasource_Post( array(
 							'query_args' => array( 'post_type' => array( 'post' ) ),
 						) ),
@@ -61,7 +61,7 @@ class GO_Bookpage_Fields {
 		if ( class_exists( 'Fieldmanager_Group' ) ) {
 			$content = new Fieldmanager_Group( array(
 				'name' => 'book_testimonials',
-				'label' => 'Content Area',
+				'label' => 'Testimonial',
 				'description' => 'Testimonials and/or praise for your book',
 				'minimum_count' => 1,
 				'extra_elements' => 0,
