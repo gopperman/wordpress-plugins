@@ -14,6 +14,7 @@
 class GO_Bookpage_Fields {
 	function __construct() {
 		if ( $this->editing_bookpage() ) {
+			add_action( 'fm_post_page', array( $this, 'header_fields' ) );
 			add_action( 'fm_post_page', array( $this, 'excerpt_fields' ) );
 			add_action( 'fm_post_page', array( $this, 'testimonial_fields' ) );
 			add_action( 'fm_post_page', array( $this, 'worksheet_fields' ) );
@@ -30,6 +31,50 @@ class GO_Bookpage_Fields {
 		} else {
 			// You must be doing AJAX or something
 			return true;
+		}
+	}
+
+	/**
+  	 * Add FM-Zones fields to homepage
+	 *
+	 * @return void
+	 */
+	function header_fields() {
+		if ( class_exists( 'Fieldmanager_Group' ) ) {
+			$header = new Fieldmanager_Group( array(
+				'name' => 'content_header',
+				'children' => array(
+					'image' => new Fieldmanager_Media( array(
+						'label' => 'Book Image',
+						'required' => true,
+						'mime_type' => 'image',
+					) ),
+					'description' => new Fieldmanager_RichTextArea( array(
+						'label' => 'Description',
+				        'buttons_1' => array( 'bold', 'italic', 'link' ),
+						'buttons_2' => array(),
+				        'editor_settings' => array(
+				        	'quicktags' => false,
+				            'media_buttons' => false,
+			            ),
+		            ) ),
+					'ctas' => new Fieldmanager_Group( array(
+						'label' => 'Call to Action',
+						'description' => 'Calls to action are buttons that link to posts or pages that you want to promote on the homepage header.',
+						'minimum_count' => 1,
+						'extra_elements' => 0,
+						'required' => true,
+						'limit' => 1,
+						'children' => array(
+							'text' => new Fieldmanager_Textfield( 'CTA Text' ),
+							'link' => new Fieldmanager_Link( array(
+								'label' => 'Enter URL:',
+							) ),
+						),
+					) ),
+				),
+			) );
+			$header->add_meta_box( 'Header Area', 'page', 'normal', 'high' );
 		}
 	}
 
@@ -87,6 +132,10 @@ class GO_Bookpage_Fields {
 
 	function worksheet_fields() {
 		if ( class_exists( 'Fieldmanager_Group' ) ) {
+			$worksheet_instructions = new Fieldmanager_Textfield( array(
+				'name' => 'book_worksheet_instructions',
+				'label' => 'One-line Worksheet Instruction',
+			) );
 			$worksheets = new Fieldmanager_Group( array(
 				'name' => 'book_worksheets',
 				'minimum_count' => 0,
@@ -104,6 +153,7 @@ class GO_Bookpage_Fields {
 					) ),
 				),
 			) );
+			$worksheet_instructions->add_meta_box( 'Worksheet Instructions', 'page', 'normal', 'low' );
 			$worksheets->add_meta_box( 'Worksheet Links', 'page', 'normal', 'low' );
 		}
 	}
