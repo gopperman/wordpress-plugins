@@ -115,13 +115,8 @@ class GO_Homepage_Fields {
 	function header_fields() {
 		if ( class_exists( 'Fieldmanager_Group' ) ) {
 			$header = new Fieldmanager_Group( array(
-				'name' => 'content_header',
+				'name' => 'homepage_header',
 				'children' => array(
-					'image' => new Fieldmanager_Media( array(
-						'label' => 'Hero Image',
-						'required' => true,
-						'mime_type' => 'image',
-					) ),
 					'header_text' => new Fieldmanager_Textfield( 'Header Text' ),
 					'header_description' => new Fieldmanager_TextArea( 'Description' ),
 					'ctas' => new Fieldmanager_Group( array(
