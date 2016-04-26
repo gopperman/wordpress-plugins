@@ -197,7 +197,15 @@ class GO_Homepage_Fields {
 						'mime_type' => 'image',
 					) ),
 					'header_text' => new Fieldmanager_Textfield( 'Header Text' ),
-					'header_description' => new Fieldmanager_TextArea( 'Description' ),
+					'header_description' => new Fieldmanager_RichTextArea( array(
+						'label' => 'Description',
+				        'buttons_1' => array( 'bold', 'italic', 'link' ),
+						'buttons_2' => array(),
+				        'editor_settings' => array(
+				        	'quicktags' => false,
+				            'media_buttons' => false,
+			            ),
+		            ) ),
 					'cta' => new Fieldmanager_Group( array(
 						'label' => 'Call to Action',
 						'children' => array(
