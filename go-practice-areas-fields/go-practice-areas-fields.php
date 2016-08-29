@@ -15,7 +15,7 @@ class GO_Practice_Areas_Fields {
 	function __construct() {
 		if ( $this->editing_practice_areas_page() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			add_action( 'fm_post_page', array( $this, 'header_fields' ) );
-			add_action( 'fm_post_page', array( $this, 'practice_areas' ) );
+			add_action( 'fm_post_page', array( $this, 'practice_area' ) );
 			add_action( 'fm_post_page', array( $this, 'featured_posts_field' ) );
 		}
 
@@ -56,32 +56,15 @@ class GO_Practice_Areas_Fields {
 		}
 	}
 
-	function practice_areas() {
-		$practice_areas = new Fieldmanager_Group( array(
-			'name' => 'practice_areas',
-			'limit' => '9',
-			'children' => array(
-				'title' => new Fieldmanager_Textfield( array(
-					'label' => 'Title',
-				) ),
-				'content' => new Fieldmanager_RichTextArea( array(
-					'label' => 'Content',
-			        'buttons_1' => array( 'bold', 'italic', 'link' ),
-					'buttons_2' => array(),
-			        'editor_settings' => array(
-			        	'quicktags' => false,
-			            'media_buttons' => false,
-		            ),
-		        ) ),
-				'link' => new Fieldmanager_Autocomplete( array(
-					'label' => 'Learn More Link',
-					'datasource' => new Fieldmanager_Datasource_Post( array(
-						'query_args' => array( 'post_type' => array( 'post', 'page' ) ),
-					) ),
-				) ),
-	        ),
+	function practice_area() {
+		$practice_areas =  new Fieldmanager_RichTextArea( array(
+			'name' => 'practice_area_content',
+	        'editor_settings' => array(
+	        	'quicktags' => false,
+	            'media_buttons' => false,
+            ),
 		) );
-		$practice_areas->add_meta_box( 'Practice Areas', 'page', 'normal', 'high' );
+		$practice_areas->add_meta_box( 'Practice Area Content', 'page', 'normal', 'high' );
 	}
 
 	function featured_posts_field() {
