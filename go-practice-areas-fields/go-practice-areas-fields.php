@@ -60,7 +60,7 @@ class GO_Practice_Areas_Fields {
 		$practice_areas =  new Fieldmanager_RichTextArea( array(
 			'name' => 'practice_area_content',
 	        'editor_settings' => array(
-	        	'quicktags' => false,
+	        	'quicktags' => true,
 	            'media_buttons' => false,
             ),
 		) );
