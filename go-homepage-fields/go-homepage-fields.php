@@ -20,6 +20,7 @@ class GO_Homepage_Fields {
 			add_action( 'fm_post_page', array( $this, 'about_fields' ) );
 			add_action( 'fm_post_page', array( $this, 'content_fields' ) );
 			add_action( 'fm_post_page', array( $this, 'product_fields' ) );
+			add_action( 'fm_post_page', array( $this, 'client_fields' ) );
 		}
 		if ( $this->is_editing_homepage() ) {
 			add_action( 'admin_menu', array( $this, 'clean_homepage_meta_boxes' ) );
@@ -182,6 +183,27 @@ class GO_Homepage_Fields {
 				),
 			) );
 			$content->add_meta_box( 'Content Areas', 'page', 'normal', 'high' );
+		}
+	}
+
+	function client_fields() {
+		if ( class_exists( 'Fieldmanager_Group' ) ) {
+			$clients = new Fieldmanager_Group( array(
+				'name' => 'homepage_clients',
+				'children' => array(
+					'header_text' => new Fieldmanager_Textfield( 'Header Text' ),
+					'image' => new Fieldmanager_Media( array(
+						'label' => 'Client Logo',
+						'description' => 'A grayscale image of the client logo with a transparent background',
+						'minimum_count' => 1,
+						'limit' => 0,
+						'add_more_label' => 'Add another logo',
+						'required' => true,
+						'mime_type' => 'image',
+					) ),
+				),
+			) );
+			$clients->add_meta_box( 'Client Logos', 'page', 'normal', 'high' );
 		}
 	}
 
