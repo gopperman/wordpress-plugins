@@ -16,6 +16,7 @@ class GO_Media_Fields {
 		if ( $this->editing_media_page() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			add_action( 'fm_post_page', array( $this, 'header_fields' ) );
 			add_action( 'fm_post_page', array( $this, 'media_video_fields' ) );
+			add_action( 'fm_post_page', array( $this, 'client_fields' ) );
 		}
 
 		if ( $this->editing_media_page() ) {
@@ -65,6 +66,27 @@ class GO_Media_Fields {
 				),
 			) );
 			$header->add_meta_box( 'Header Area', 'page', 'normal', 'high' );
+		}
+	}
+
+	function client_fields() {
+		if ( class_exists( 'Fieldmanager_Group' ) ) {
+			$clients = new Fieldmanager_Group( array(
+				'name' => 'media_clients',
+				'children' => array(
+					'header_text' => new Fieldmanager_Textfield( 'Header Text' ),
+					'image' => new Fieldmanager_Media( array(
+						'label' => 'Client Logo',
+						'description' => 'A grayscale image of the client logo with a transparent background',
+						'minimum_count' => 1,
+						'limit' => 0,
+						'add_more_label' => 'Add another logo',
+						'required' => true,
+						'mime_type' => 'image',
+					) ),
+				),
+			) );
+			$clients->add_meta_box( 'Client Logos', 'page', 'normal', 'high' );
 		}
 	}
 
